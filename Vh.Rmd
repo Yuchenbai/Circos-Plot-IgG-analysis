@@ -1,0 +1,184 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Circos plot
+
+THis is a markdown file of the CD160 Circos plot code
+
+
+Functions:
+- Count the usage of Vh, VD and Vj frequency of the heavy chain
+- draw the circos plot
+
+
+'''
+
+library(circlize)
+library(migest)
+library(dplyr)
+#filename <- "igH_prePCR.txt"
+#filename <- "igH_postPCR.txt"
+filename <- "VH-VK-Pan1-s.txt"
+
+my_data <- read.csv(filename, sep="\t", header=TRUE)
+
+head(my_data)
+
+
+names(my_data)[1:5] <- c("count","frequency","vgene","jgene", "vj")
+
+ function:
+head(my_data)
+
+my_data$frequency <- my_data$frequency * 10000
+
+
+dim(my_data)
+
+summary(my_data)
+
+summary(my_data$count)
+
+
+
+
+
+
+ c("1_Active_Promoter","4_Strong_Enhancer","8_Insulator"),]
+
+m <- data.frame(order = 1:34,
+                country = c("IgHV1", "IgHV2", "IgHV3", "IgHV4", "IgHV5", "IgHV6", "IgHV7", "IgHV8", "IgHV9", "IgHV10", "IgHV11","IgHV12", "IgHV15", "IgKV1", "IgKV2", "IgKV3", "IgKV4", "IgKV5", "IgKV6", "IgKV7", "IgKV8", "IgKV9", "IgKV10", "IgKV12", "IgKV13","IgKV14", "IgKV15", "IgKV16", "IgKV17", "IgKV18", "IgKV19", "IgKV20","IgKV21", "IgKV22"),
+                IGHV1= c(1,1,1,1,1,1,1,1,1,1,1,1,1,sum(my_data[my_data$vj %in% c("IGHV1-IGKV1"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV2"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV3"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV4"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV5"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV6"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV7"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV8"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV9"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV10"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV12"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV13"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV14"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV15"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV16"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV17"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV18"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV19"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV20"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV21"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV1-IGKV22"),]$frequency)+0.0000001),
+                IGHV2= c(1,1,1,1,1,1,1,1,1,1,1,1,1,sum(my_data[my_data$vj %in% c("IGHV2-IGKV1"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV2"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV3"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV4"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV5"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV6"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV7"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV8"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV9"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV10"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV12"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV13"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV14"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV15"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV16"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV17"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV18"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV19"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV20"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV21"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV2-IGKV22"),]$frequency)+0.0000001),
+                IGHV3= c(1,1,1,1,1,1,1,1,1,1,1,1,1,sum(my_data[my_data$vj %in% c("IGHV3-IGKV1"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV2"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV3"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV4"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV5"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV6"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV7"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV8"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV9"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV10"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV12"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV13"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV14"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV15"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV16"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV17"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV18"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV19"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV20"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV21"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV3-IGKV22"),]$frequency)+0.0000001),
+                IGHV4= c(1,1,1,1,1,1,1,1,1,1,1,1,1,sum(my_data[my_data$vj %in% c("IGHV4-IGKV1"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV2"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV3"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV4"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV5"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV6"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV7"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV8"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV9"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV10"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV12"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV13"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV14"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV15"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV16"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV17"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV18"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV19"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV20"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV21"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV4-IGKV22"),]$frequency)+0.0000001),
+                IGHV5= c(1,1,1,1,1,1,1,1,1,1,1,1,1,sum(my_data[my_data$vj %in% c("IGHV5-IGKV1"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV2"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV3"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV4"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV5"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV6"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV7"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV8"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV9"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV10"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV12"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV13"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV14"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV15"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV16"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV17"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV18"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV19"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV20"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV21"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV5-IGKV22"),]$frequency)+0.0000001),
+                IGHV6= c(1,1,1,1,1,1,1,1,1,1,1,1,1,sum(my_data[my_data$vj %in% c("IGHV6-IGKV1"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV2"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV3"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV4"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV5"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV6"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV7"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV8"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV9"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV10"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV12"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV13"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV14"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV15"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV16"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV17"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV18"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV19"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV20"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV21"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV6-IGKV22"),]$frequency)+0.0000001),
+                IGHV7= c(1,1,1,1,1,1,1,1,1,1,1,1,1,sum(my_data[my_data$vj %in% c("IGHV7-IGKV1"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV2"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV3"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV4"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV5"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV6"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV7"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV8"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV9"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV10"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV12"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV13"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV14"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV15"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV16"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV17"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV18"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV19"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV20"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV21"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV7-IGKV22"),]$frequency)+0.0000001),
+                IGHV8= c(1,1,1,1,1,1,1,1,1,1,1,1,1,sum(my_data[my_data$vj %in% c("IGHV8-IGKV1"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV2"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV3"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV4"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV5"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV6"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV7"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV8"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV9"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV10"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV12"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV13"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV14"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV15"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV16"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV17"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV18"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV19"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV20"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV21"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV8-IGKV22"),]$frequency)+0.0000001),
+                IGHV9= c(1,1,1,1,1,1,1,1,1,1,1,1,1,sum(my_data[my_data$vj %in% c("IGHV9-IGKV1"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV2"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV3"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV4"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV5"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV6"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV7"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV8"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV9"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV10"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV12"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV13"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV14"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV15"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV16"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV17"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV18"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV19"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV20"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV21"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV9-IGKV22"),]$frequency)+0.0000001),
+                IGHV10=c(1,1,1,1,1,1,1,1,1,1,1,1,1,sum(my_data[my_data$vj %in% c("IGHV10-IGKV1"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV2"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV3"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV4"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV5"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV6"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV7"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV8"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV9"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV10"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV12"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV13"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV14"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV15"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV16"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV17"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV18"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV19"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV20"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV21"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV10-IGKV22"),]$frequency)+0.0000001),
+                IGHV11=c(1,1,1,1,1,1,1,1,1,1,1,1,1,sum(my_data[my_data$vj %in% c("IGHV11-IGKV1"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV2"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV3"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV4"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV5"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV6"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV7"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV8"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV9"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV10"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV12"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV13"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV14"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV15"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV16"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV17"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV18"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV19"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV20"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV21"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV11-IGKV22"),]$frequency)+0.0000001),
+                IGHV12=c(1,1,1,1,1,1,1,1,1,1,1,1,1,sum(my_data[my_data$vj %in% c("IGHV12-IGKV1"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV2"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV3"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV4"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV5"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV6"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV7"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV8"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV9"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV10"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV12"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV13"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV14"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV15"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV16"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV17"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV18"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV19"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV20"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV21"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV12-IGKV22"),]$frequency)+0.0000001),
+                IGHV15=c(1,1,1,1,1,1,1,1,1,1,1,1,1,sum(my_data[my_data$vj %in% c("IGHV15-IGKV1"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV2"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV115-IGKV3"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV4"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV5"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV6"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV7"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV8"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV9"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV10"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV12"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV115-IGKV13"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV14"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV15"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV16"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV17"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV18"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV19"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV20"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV21"),]$frequency)+0.0000001,sum(my_data[my_data$vj %in% c("IGHV15-IGKV22"),]$frequency)+0.0000001),
+                IGKV1= c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV2= c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV3= c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV4= c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV5= c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV6= c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV7= c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV8= c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV9= c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV10=c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV12=c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV13=c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV14=c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV15=c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV16=c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV17=c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV18=c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV19=c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV20=c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV21=c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                IGKV22=c(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+                
+                r = c(255, 255, 255, 218, 220, 139, 123, 106, 0,  0,  0,  25, 0,  255, 240, 255, 255, 218, 255,255,255, 220, 0, 0,  210, 0, 255, 218,199,219, 255,255,250,245),
+                g = c(182, 105,  20, 112, 20,  0,   104, 90,  0,  0,  0,  25, 0,  250, 230, 255, 215, 165, 218,160,140, 20,  0, 255,105, 128,0,  112,21, 112, 20, 105,235,222),
+                b = c(193, 180, 147, 214, 60,  139, 238, 205, 255,255,139,112,128,205, 140, 0,   0,   32,  185,122,0,   60, 205,255,30,  0,  255,214,133,147, 147,180,155,179),
+                stringsAsFactors = FALSE)
+
+df1 <- m[, c(1,2, 37:39)]  #modifiesd
+m <- m[,-(1:2)]/1e04
+m <- as.matrix(m[,c(1:34)])  #modified
+dimnames(m) <- list(orig = df1$country, dest = df1$country)
+
+df1 <- arrange(df1, order)
+df1$country <- factor(df1$country, levels = df1$country)
+m <- m[levels(df1$country),levels(df1$country)]
+
+
+
+df1$xmin <- 0
+df1$xmax <- rowSums(m) + colSums(m)
+n <- nrow(df1)
+df1$rcol<-rgb(df1$r, df1$g, df1$b, max = 255)
+df1$lcol<-rgb(df1$r, df1$g, df1$b, alpha=200, max = 255)
+
+
+par(mar=rep(0,4))
+circos.clear()
+
+
+circos.par(cell.padding=c(0,0,0,0), track.margin=c(0,0.15), start.degree = 90, gap.degree =4)
+
+
+circos.initialize(factors = df1$country, xlim = cbind(df1$xmin, df1$xmax))
+
+
+circos.trackPlotRegion(ylim = c(0, 1), factors = df1$country, track.height=0.1,
+                       #panel.fun for each sector
+                       panel.fun = function(x, y) {
+                         #select details of current sector
+                         name = get.cell.meta.data("sector.index")
+                         i = get.cell.meta.data("sector.numeric.index")
+                         xlim = get.cell.meta.data("xlim")
+                         ylim = get.cell.meta.data("ylim")
+                         
+                         #text direction (dd) and adjusmtents (aa)
+                         theta = circlize(mean(xlim), 1.3)[1, 1] %% 360
+                         dd <- ifelse(theta < 90 || theta > 270, "clockwise", "reverse.clockwise")
+                         aa = c(1, 0.5)
+                         if(theta < 90 || theta > 270)  aa = c(0, 0.5)
+                         
+                         #plot country labels
+                         circos.text(x=mean(xlim), y=1.7, labels=name, facing = dd, cex=0.6,  adj = aa)
+                         
+                         #plot main sector
+                         circos.rect(xleft=xlim[1], ybottom=ylim[1], xright=xlim[2], ytop=ylim[2], 
+                                     col = df1$rcol[i], border=df1$rcol[i])
+                         
+                         #blank in part of main sector
+                         circos.rect(xleft=xlim[1], ybottom=ylim[1], xright=xlim[2]-rowSums(m)[i], ytop=ylim[1]+0.3, 
+                                     col = "white", border = "white")
+                         
+                         #white line all the way around
+                         circos.rect(xleft=xlim[1], ybottom=0.3, xright=xlim[2], ytop=0.32, col = "white", border = "white")
+                         
+                         #plot axis
+                         circos.axis(labels.cex=0.6, direction = "outside", major.at=seq(from=0,to=floor(df1$xmax)[i],by=5), 
+                                     minor.ticks=1, labels.away.percentage = 0.15)
+                       })
+
+
+df1$sum1 <- colSums(m)
+df1$sum2 <- numeric(n)
+
+
+df2 <- cbind(as.data.frame(m),orig=rownames(m),  stringsAsFactors=FALSE)
+df2 <- reshape(df2, idvar="orig", varying=list(1:n), direction="long",
+               timevar="dest", time=rownames(m),  v.names = "m")
+df2 <- arrange(df2,desc(m))
+
+
+df2 <- subset(df2, m > quantile(m,0.6))
+
+
+for(k in 1:nrow(df2)){
+  #i,j reference of flow matrix
+  i<-match(df2$orig[k],df1$country)
+  j<-match(df2$dest[k],df1$country)
+  
+  #plot link
+  circos.link(sector.index1=df1$country[i], point1=c(df1$sum1[i], df1$sum1[i] + abs(m[i, j])),
+              sector.index2=df1$country[j], point2=c(df1$sum2[j], df1$sum2[j] + abs(m[i, j])),
+              col = df1$lcol[i])
+  
+
+  df1$sum1[i] = df1$sum1[i] + abs(m[i, j])
+  df1$sum2[j] = df1$sum2[j] + abs(m[i, j])
+}
+
+'''
